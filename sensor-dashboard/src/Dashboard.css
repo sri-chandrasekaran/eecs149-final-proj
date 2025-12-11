@@ -1,0 +1,121 @@
+/* Dashboard.css */
+
+/* Body / Page */
+body, html {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Dashboard container */
+  .dashboard {
+    padding: 2rem;
+  }
+  
+  /* Headings */
+  .dashboard h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #1f2937; /* dark gray */
+  }
+  
+  .dashboard h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #111827;
+  }
+  
+  /* Sensor cards */
+  .sensor-card {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 95%;
+  }
+  
+  .sensor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+  
+
+    .sensor-metrics {
+    display: flex;
+    flex-wrap: nowrap; /* keeps them in one row */
+    justify-content: space-between; /* evenly space metrics */
+    gap: 1rem; /* optional spacing between metrics */
+  }
+  
+  /* Each metric block */
+  .sensor-metrics > .text-center {
+    flex: 1; /* allow each metric to grow/shrink equally */
+    min-width: 80px; /* optional: ensure metric doesn’t get too small */
+    text-align: center;
+  }
+  
+  /* Metric values */
+  .metric-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  /* Metric labels */
+  .metric-label {
+    font-size: 0.875rem;
+    color: #555;
+  }
+  
+  
+  /* Metric colors */
+  .pm25 { color: #3b82f6; }     /* red */
+  .pm10 { color: #3b82f6; }     /* orange */
+  .temperature { color: #3b82f6; } /* blue */
+  .humidity { color: #3b82f6; } /* cyan */
+  .pressure { color: #3b82f6; }  /* purple */
+  
+  /* Tabs */
+  .metric-tabs {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .metric-tab {
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    background-color: #e5e7eb;
+    color: #111827;
+    border: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .metric-tab.active {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  /* Graph container */
+  .graph-container {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    height: 300px;
+  }
+  
+  /* No data message */
+  .no-data {
+    text-align: center;
+    color: #6b7280;
+    font-size: 1rem;
+    margin-top: 2rem;
+  }
+  
