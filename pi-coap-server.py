@@ -56,8 +56,9 @@ class IngestResource(resource.Resource):
         entry = dict(data)
         entry["timestamp"] = time.time()
 
-        # Store by node_id
+        # Store by node_id (shared with Flask handlers)
         node_data[node_id] = entry
+        print(f"[CoAP] Stored data for {node_id}, total nodes: {len(node_data)}")
 
         # Respond with 2.04 Changed
         return Message(code=Code.CHANGED, payload=b"OK")
@@ -129,4 +130,5 @@ if __name__ == '__main__':
     print("  http://149final.local:5000/api/sensors   (all nodes)")
     print("  http://149final.local:5000/api/status    (health)")
 
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # IMPORTANT: disable debug/reloader so we stay in a single process
+    app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
