@@ -5,77 +5,92 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+function randomInRange(min, max) {
+  return +(Math.random() * (max - min) + min).toFixed(1);
+}
+
 
 export default function Dashboard() {
-  // const [sensors, setSensors] = useState({});
-  const mockHistory = {
-    "node-01": {
-      temperature: Array.from({ length: 10 }, (_, i) => ({
-        value: 20 + i * 0.5, // temperatures 20, 20.5, ..., 24.5
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      humidity: Array.from({ length: 10 }, (_, i) => ({
-        value: 40 + i, // 40,41,...49
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      pressure: Array.from({ length: 10 }, (_, i) => ({
-        value: 1010 + i * 0.2,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      pm1: Array.from({ length: 10 }, (_, i) => ({
-        value: 5 + i,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      pm25: Array.from({ length: 10 }, (_, i) => ({
-        value: 10 + i * 2,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      pm10: Array.from({ length: 10 }, (_, i) => ({
-        value: 15 + i * 3,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      }))
-    },
-    "node-02": {
-      temperature: Array.from({ length: 10 }, (_, i) => ({
-        value: 22 + i * 0.4,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      humidity: Array.from({ length: 10 }, (_, i) => ({
-        value: 35 + i,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      pressure: Array.from({ length: 10 }, (_, i) => ({
-        value: 1008 + i * 0.3,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      pm1: Array.from({ length: 10 }, (_, i) => ({
-        value: 3 + i,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      pm25: Array.from({ length: 10 }, (_, i) => ({
-        value: 8 + i * 2,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      })),
-      pm10: Array.from({ length: 10 }, (_, i) => ({
-        value: 12 + i * 2.5,
-        timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
-      }))
-    }
-  };
-  const [history, setHistory] = useState(mockHistory);
+  const [sensors, setSensors] = useState({});
+  // const mockHistory = {
+  //   "node-01": {
+  //     temperature: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 20 + i * 0.5, // temperatures 20, 20.5, ..., 24.5
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     humidity: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 40 + i, // 40,41,...49
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     pressure: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 1010 + i * 0.2,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     pm1: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 5 + i,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     pm25: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 10 + i * 2,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     pm10: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 15 + i * 3,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     }))
+  //   },
+  //   "node-02": {
+  //     temperature: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 22 + i * 0.4,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     humidity: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 35 + i,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     pressure: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 1008 + i * 0.3,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     pm1: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 3 + i,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     pm25: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 8 + i * 2,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     pm10: Array.from({ length: 10 }, (_, i) => ({
+  //       value: 12 + i * 2.5,
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     })),
+  //     accel: Array.from({ length: 10 }, (_, i) => ({
+  //       value: +(0.01 * i).toFixed(2),
+  //       timestamp: `10:${i < 10 ? '0' : ''}${i} AM`
+  //     }))      
+  //   }
+  // };
+  // const [history, setHistory] = useState(mockHistory);
+  const [history, setHistory] = useState({});
   const [activeMetric, setActiveMetric] = useState('temperature'); 
-  const [sensors, setSensors] = useState({
-    "node-01": { temperature: 35, humidity: 25, pressure: 100, pm1: 5, pm25: 160, pm10: 180 },
-    "node-02": { temperature: 33, humidity: 28, pressure: 200, pm1: 6, pm25: 140, pm10: 155 },
-  });
   
-  const metrics = ['temperature', 'humidity', 'pressure', 'pm1', 'pm25', 'pm10'];
+  const metrics = ['temperature', 'humidity', 'pressure', 'pm1', 'pm25', 'pm10', 'accel'];
+
   const WILDFIRE_THRESHOLDS = {
     temperature: 32,  
     humidity: 30,   
     pm25: 150,   
     pm10: 150   
   };
+
+  const EARTHQUAKE_THRESHOLDS = {
+    accel_light: 0.05,
+    accel_moderate: 0.1,
+    accel_strong: 0.5,
+    accel_severe: 2.0,
+    accel_violent: 10.0
+  };
+  
   
 
   useEffect(() => {
@@ -88,29 +103,33 @@ export default function Dashboard() {
         const newHistory = { ...history };
 
         Object.entries(data).forEach(([nodeId, nodeData]) => {
+          if (!newHistory[nodeId]) newHistory[nodeId] = {};
           transformed[nodeId] = {
             temperature: nodeData.temperature_c,
             humidity: nodeData.humidity,
             pressure: nodeData.pressure_hpa,
             pm1: nodeData.pm1,
             pm25: nodeData.pm25,
-            pm10: nodeData.pm10
+            pm10: nodeData.pm10,
+            accel: nodeData.accel
           };
 
           // Track history for graphs
-          setHistory(prevHistory => {
-            const newHistory = { ...prevHistory };
-            if (!newHistory[nodeId]) newHistory[nodeId] = {};
-            metrics.forEach(metric => {
-              if (!newHistory[nodeId][metric]) newHistory[nodeId][metric] = [];
-              newHistory[nodeId][metric].push({
+          metrics.forEach(metric => {
+            const prev = newHistory[nodeId]?.[metric] || [];
+
+          
+            const updated = [
+              ...prev.slice(-9), // keep last 9
+              {
                 value: transformed[nodeId][metric],
                 timestamp: new Date().toLocaleTimeString()
-              });
-              if (newHistory[nodeId][metric].length > 10) newHistory[nodeId][metric].shift();
-            });
-            return newHistory;
+              }
+            ];
+          
+            newHistory[nodeId][metric] = updated;
           });
+          
 
           // Check for wildfire alerts
           // Object.entries(WILDFIRE_THRESHOLDS).forEach(([metric, threshold]) => {
@@ -122,8 +141,8 @@ export default function Dashboard() {
           // });
 
           const isHighTemp = transformed[nodeId].temperature > WILDFIRE_THRESHOLDS.temperature;
-        const isLowHumidity = transformed[nodeId].humidity < WILDFIRE_THRESHOLDS.humidity;
-        const isHighPM = transformed[nodeId].pm25 > WILDFIRE_THRESHOLDS.pm25 || transformed[nodeId].pm10 > WILDFIRE_THRESHOLDS.pm10;
+          const isLowHumidity = transformed[nodeId].humidity < WILDFIRE_THRESHOLDS.humidity;
+          const isHighPM = transformed[nodeId].pm25 > WILDFIRE_THRESHOLDS.pm25 || transformed[nodeId].pm10 > WILDFIRE_THRESHOLDS.pm10;
 
         if (isHighTemp && isLowHumidity && isHighPM) {
           toast.error(`🔥 Early signs of wildfire detected at ${nodeId}!
@@ -132,7 +151,19 @@ export default function Dashboard() {
           - PM2.5: ${transformed[nodeId].pm25} μg/m³
           - PM10: ${transformed[nodeId].pm10} μg/m³`);
         }
-      });
+
+      const a = transformed[nodeId].accel;
+
+      if (a > EARTHQUAKE_THRESHOLDS.accel_violent) {
+        toast.error(`💥 VIOLENT earthquake activity at ${nodeId}! accel = ${a} m/s²`);
+      } else if (a > EARTHQUAKE_THRESHOLDS.accel_severe) {
+        toast.error(`⚠️ Severe shaking detected at ${nodeId} (M6+) – accel = ${a} m/s²`);
+      } else if (a > EARTHQUAKE_THRESHOLDS.accel_strong) {
+        toast.warn(`Strong shaking at ${nodeId} – accel = ${a} m/s²`);
+      } else if (a > EARTHQUAKE_THRESHOLDS.accel_moderate) {
+        toast.warn(`Moderate shaking at ${nodeId} – accel = ${a} m/s²`);
+      }
+    });
 
         setSensors(transformed);
         setHistory(newHistory);
@@ -159,7 +190,7 @@ export default function Dashboard() {
             <h2>{nodeId.toUpperCase()}</h2>
             <div className="sensor-metrics">
             <div className="text-center">
-                <div className="metric-value pm25">{data.pm25}</div>
+                <div className="metric-value pm25">{data.pm1}</div>
                 <div className="metric-label">PM1 μg/m³</div>
               </div>
               <div className="text-center">
@@ -182,6 +213,11 @@ export default function Dashboard() {
                 <div className="metric-value pressure">{data.pressure}</div>
                 <div className="metric-label">Pressure hPa</div>
               </div>
+              <div className="text-center">
+                <div className="metric-value accel">{data.accel}</div>
+                <div className="metric-label">Acceleration m/s²</div>
+              </div>
+
             </div>
           </div>
         ))}
