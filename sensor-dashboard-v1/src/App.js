@@ -10,6 +10,12 @@ export default function Dashboard() {
   const metrics = ['temperature', 'humidity', 'pressure', 'pm1', 'pm25', 'pm10', 'accel'];
   const [activeMetric, setActiveMetric] = useState(metrics[0]); 
 
+  const accelMagnitude = (x, y, z) => {
+    if (x == null || y == null || z == null) return null;
+    return Math.sqrt(x*x + y*y + z*z);
+  };
+  
+
   const WILDFIRE_THRESHOLDS = {
     temperature: 32,  
     humidity: 30,   
@@ -52,6 +58,13 @@ export default function Dashboard() {
   
         // 1️⃣ Build sensor snapshot + alerts
         Object.entries(data).forEach(([nodeId, nodeData]) => {
+
+          const accel = accelMagnitude(
+            nodeData.accel_x_ms2,
+            nodeData.accel_y_ms2,
+            nodeData.accel_z_ms2
+          );
+
           const node = {
             temperature: nodeData.temperature_c,
             humidity: nodeData.humidity,
@@ -59,30 +72,38 @@ export default function Dashboard() {
             pm1: nodeData.pm1,
             pm25: nodeData.pm25,
             pm10: nodeData.pm10,
-            accel: nodeData.accel
+            accel,
+            timestamp: nodeData.timestamp
           };
   
           transformed[nodeId] = node;
   
-          // 🔥 Wildfire alert
-          const wildfire =
+          // 🔥 Wildfire alert (null-safe)
+            const wildfire =
+            node.temperature != null &&
+            node.humidity != null &&
+            (
+              (node.pm25 != null && node.pm25 > WILDFIRE_THRESHOLDS.pm25) ||
+              (node.pm10 != null && node.pm10 > WILDFIRE_THRESHOLDS.pm10)
+            ) &&
             node.temperature > WILDFIRE_THRESHOLDS.temperature &&
-            node.humidity < WILDFIRE_THRESHOLDS.humidity &&
-            (node.pm25 > WILDFIRE_THRESHOLDS.pm25 ||
-             node.pm10 > WILDFIRE_THRESHOLDS.pm10);
-  
-          if (wildfire) {
+            node.humidity < WILDFIRE_THRESHOLDS.humidity;
+
+            if (wildfire) {
             throttledAlert("wildfire", () =>
               toast.error(`🔥 Early signs of wildfire at ${nodeId}`)
             );
-          }
-  
-          // 💥 Earthquake alert
-          if (node.accel > EARTHQUAKE_THRESHOLDS.accel_strong) {
+            }
+
+            // 💥 Earthquake alert (null-safe)
+            if (
+            node.accel != null &&
+            node.accel > EARTHQUAKE_THRESHOLDS.accel_strong
+            ) {
             throttledAlert("earthquake", () =>
               toast.warn(`💥 Earthquake shaking at ${nodeId}`)
             );
-          }
+            }
         });
   
         // 2️⃣ Update sensors ONCE
@@ -101,7 +122,8 @@ export default function Dashboard() {
                 ...prevArr.slice(-9),
                 {
                   value: node[metric],
-                  timestamp: new Date().toLocaleTimeString()
+                  timestamp: new Date(node.timestamp * 1000).toLocaleTimeString()
+
                 }
               ];
             });
