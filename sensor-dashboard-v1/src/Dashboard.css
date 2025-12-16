@@ -72,11 +72,11 @@ body, html {
   
   
   /* Metric colors */
-  .pm25 { color: #3b82f6; }     /* red */
-  .pm10 { color: #3b82f6; }     /* orange */
-  .temperature { color: #3b82f6; } /* blue */
-  .humidity { color: #3b82f6; } /* cyan */
-  .pressure { color: #3b82f6; }  /* purple */
+  .pm25 { color: black; }     /* red */
+  .pm10 { color: black; }     /* orange */
+  .temperature { color: black; } /* blue */
+  .humidity { color: black; } /* cyan */
+  .pressure { color: black; }  /* purple */
   
   /* Tabs */
   .metric-tabs {
